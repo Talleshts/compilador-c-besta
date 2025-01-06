@@ -1,92 +1,59 @@
-# Frontend
+# FrontendNew
 
-Este projeto foi gerado usando [Angular CLI](https://github.com/angular/angular-cli) versão 19.0.4.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
 
-## Pré-requisitos
+## Development server
 
-Antes de começar, certifique-se de ter os seguintes softwares instalados em sua máquina:
+To start a local development server, run:
 
-- [Node.js](https://nodejs.org/en/download/) (versão 14 ou superior)
-- [Angular CLI](https://angular.io/cli)
-
-## Passos para configurar o ambiente
-
-### 1. Clonar o repositório
-
-Primeiro, clone o repositório do projeto para sua máquina local usando o comando:
-
-```sh
-git clone <URL_DO_REPOSITORIO>
-```
-
-### 2. Navegar até o diretório do frontend
-
-Entre no diretório do frontend:
-
-```sh
-cd frontend
-```
-
-### 3. Instalar as dependências
-
-Execute o comando abaixo para instalar todas as dependências necessárias:
-
-```sh
-npm install
-```
-
-### 4. Rodar o servidor de desenvolvimento
-
-Após a instalação das dependências, você pode iniciar o servidor de desenvolvimento com o seguinte comando:
-
-```sh
+```bash
 ng serve
 ```
 
-Uma vez que o servidor estiver rodando, abra seu navegador e navegue para http://localhost:4200/. A aplicação será recarregada automaticamente sempre que você modificar qualquer um dos arquivos de origem.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
 
-O Angular CLI inclui ferramentas poderosas de scaffolding de código. Para gerar um novo componente, execute:
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```sh
-ng generate component nome-do-componente
+```bash
+ng generate component component-name
 ```
 
-Para uma lista completa de schematics disponíveis (como components, directives ou pipes), execute:
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```sh
+```bash
 ng generate --help
 ```
 
 ## Building
 
-Para compilar o projeto, execute:
+To build the project run:
 
-```sh
+```bash
 ng build
 ```
 
-Isso irá compilar seu projeto e armazenar os artefatos de build no diretório `dist/`. Por padrão, o build de produção otimiza sua aplicação para desempenho e velocidade.
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
 ## Running unit tests
 
-Para executar testes unitários com o Karma, use o seguinte comando:
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```sh
+```bash
 ng test
 ```
 
 ## Running end-to-end tests
 
-Para testes end-to-end (e2e), execute:
+For end-to-end (e2e) testing, run:
 
-```sh
+```bash
 ng e2e
 ```
 
-O Angular CLI não vem com um framework de testes end-to-end por padrão. Você pode escolher um que atenda às suas necessidades.
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Recursos adicionais
+## Additional Resources
 
-Para mais informações sobre como usar o Angular CLI, incluindo referências detalhadas de comandos, visite a página [Angular CLI Overview and Command Reference](https://angular.io/cli).
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
