@@ -1,7 +1,56 @@
-<div>
-    <textarea
+<div class="monitor-frame">
+
+    <textarea class="screen-frame"
         [(ngModel)]="codeContent"
-        placeholder="Escreva ESCREVA!"
+        placeholder="DRAGÕES ABATIDOS: 0001"
     ></textarea>
-    <button class="send-button" (click)="postCode()">Enviar Código</button>
+    
+    <div class="button-container">
+        <div class="button-label-pair">
+            <button class="monitor-button btn-1" (click)="postCode()"></button>
+            <label class="bold">POWER</label>
+        </div>
+
+        <div class="button-label-trio">
+            <label>ON</label>
+            <button class="monitor-button btn-2" (click)="postCode()"></button>
+            <label>OFF</label>
+        </div>
+
+        <div class="button-label-pair">
+            <label>BRIGHT</label>
+            <button class="monitor-button btn-3" (click)="postCode()"></button>
+        </div>
+    </div>
+
+</div>
+
+<div class="monitor-neck"></div>
+
+<div class="desktop-body">
+
+    <div class="desktop-body-left">
+        <div class="lil-square"></div>
+
+        <div class="vertical-line"
+        *ngFor="let number of [].constructor(11)"></div>
+    </div>
+
+    <div class="desktop-body-right">
+        <div class="something-square">
+            <div class="black-square"></div>
+            <div class="horizontal-bar"></div>
+            <div class="mixed-square">
+                <div class="point"></div>
+            </div>
+        </div>
+
+        <div class="something-square">
+            <div class="black-square"></div>
+            <div class="horizontal-bar"></div>
+            <div class="mixed-square">
+                <div class="point"></div>
+            </div>
+        </div>
+    </div>
 </div>

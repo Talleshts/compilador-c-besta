@@ -1,0 +1,192 @@
+.monitor-frame {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ecd6c1;
+    border: 2px solid #16131C;
+    border-radius: 0px 30px 5px 5px;
+    width: 500px;
+    height: 315px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.screen-frame {
+    background-color: #a495aa;
+    border: 2px solid #16131C;
+    border-radius: 40px;
+    min-width: 368.5px;
+    height: 285px;
+    min-height: 100%;
+    padding: 20px;
+    margin-right: 10px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.button-label-pair {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-label-trio {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.monitor-button {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border-color: #16131C;
+}
+
+.btn-1 {
+    background-color: #16131C;
+}
+
+.btn-2 {
+    background: repeating-linear-gradient(
+        135deg, /* Ângulo das listras */
+        #16131C, /* Cor do btn-1 */
+        #16131C 2px, /* Fim da primeira listra */
+        #ecd6c1 2px, /* Cor do btn-3 começa */
+        #ecd6c1 3px /* Fim da segunda listra */
+    );
+}
+
+.btn-3 {
+    background-color: #ecd6c1;
+}
+
+.monitor-neck {
+    background-color: #ecd6c1;
+    border: 2px solid #16131C;
+    border-radius: 0px 0px 10px 10px;
+    width: 475px;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+
+.desktop-body {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ecd6c1;
+    border: 2px solid #16131C;
+    border-radius: 0px 10px 0px 0px;
+    width: 612.5px;
+    height: 176px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 40px;
+    padding-right: 70px;
+}
+
+.lil-square {
+    background-color: #ecd6c1;
+    border: 2px solid #16131C;
+    border-radius: 2px;
+    width: 35px;
+    height: 25px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.vertical-line {
+    display: inline-block;
+    border-left: 2px solid #16131C;
+    height: 40px;
+    margin-right: 7px;
+}
+
+.desktop-body-right {
+    display: flex;
+}
+
+.something-square {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ecd6c1;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-color: #16131C;
+    width: 125px;
+    height: 100px;
+    margin-left: 8px;
+}
+
+.black-square {
+    background-color: #16131C;
+    border: 2px solid #16131C;
+    border-radius: 1px 1px 0px 0px;
+    width: 35px;
+    height: 25px;
+    margin-right: -12px;
+}
+
+.horizontal-bar {
+    border-top: 2px solid #16131C;
+    height: 0px;
+    width: 80px;
+}
+
+.mixed-square {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    background: repeating-linear-gradient(
+        135deg, /* Ângulo das listras */
+        #16131C, /* Cor do btn-1 */
+        #16131C 2px, /* Fim da primeira listra */
+        #ecd6c1 2px, /* Cor do btn-3 começa */
+        #ecd6c1 5px /* Fim da segunda listra */
+    );
+    border: 2px solid #16131C;
+    border-radius: 1px 1px 0px 0px;
+    width: 35px;
+    height: 25px;
+    margin-right: -12px;
+}
+
+.point {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    border-color: #16131C;
+    background-color: #16131C;
+    margin-left: -15px;
+}
+
+textarea {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: small;
+    resize: none;
+}
+
+label {
+    text-align: center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 100;
+    letter-spacing: 0.1rem;
+}
+
+.bold {
+    font-weight:bold;
+}
