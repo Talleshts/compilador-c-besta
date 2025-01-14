@@ -10,10 +10,18 @@
             </section>   
         </div> 
 
-        <textarea class="screen-frame"
+        <textarea id="textAreaSrc"
+            class="screen-frame"
             [(ngModel)]="srcContent"
             placeholder="Escreva seu código-fonte"
             *ngIf="screenMode === 'src'"
+        ></textarea>
+
+        <textarea id="textAreaOutput"
+            class="screen-frame"
+            [(ngModel)]="outputContent"
+            placeholder="Erros aqui"
+            *ngIf="screenMode === 'output'"
         ></textarea>
     </div>
     
@@ -24,17 +32,17 @@
         </div>
 
         <div class="button-label-trio">
-            <label>SRC</label>
+            <label id="lbl-src">SRC</label>
             <button class="monitor-button btn-2"></button>
             <div class="label-pair-wrapper">
-                <label>OUT</label>
-                <label>PUT</label>
+                <label class="lbl-output">OUT</label>
+                <label class="lbl-output">PUT</label>
             </div>
         </div>
 
         <div class="button-label-pair">
             <label>COMPILAR</label>
-            <button class="monitor-button btn-3" (click)="postCode()"></button>
+            <button class="monitor-button btn-3" (click)="compilarBtn()"></button>
         </div>
     </div>
 

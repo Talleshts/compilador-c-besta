@@ -83,7 +83,12 @@
 
 .btn-1 {
     cursor: pointer;
-    background-color: #16131C;
+    background-color: #fe4a3c;
+    border-width: 0px;
+}
+
+.lbl-btn-1 {
+    color: #fe4a3c;
 }
 
 .btn-2 {
@@ -206,10 +211,6 @@
 
 .bold {
     font-weight:bold;
-}
-
-.btn-1, .lbl-btn-1 {
-    color: #fe4a3c;
 }
 
 #dragon {
