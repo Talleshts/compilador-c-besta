@@ -24,9 +24,9 @@ public class ExemploController {
 	@PostMapping("/post")
 	public ResponseDTO[] postMethodName(@RequestBody String entity) {
 		return new ResponseDTO[] {
-			new ResponseDTO("Erro Léxico 1", 1, 2),
-			new ResponseDTO("Erro Léxico 2", 3, 4),
-			new ResponseDTO("Erro Léxico 3", 5, 6)
+			new ResponseDTO("Erro Léxico 1;", 1, 2),
+			new ResponseDTO("Erro Léxico 2;", 3, 4),
+			new ResponseDTO("Erro Léxico 3;", 5, 6)
 		};
 	}	
 }
