@@ -1,24 +1,39 @@
 <div class="monitor-frame">
 
-    <textarea class="screen-frame"
-        [(ngModel)]="codeContent"
-        placeholder="DRAGÕES ABATIDOS: 0001"
-    ></textarea>
+    <div class="screen-wrapper">
+
+        <div class="screen-frame" *ngIf="screenMode === ''">
+            <img id="dragon" [src]="currentDragonImage" alt="Dragon">
+            <section class="screen-bottom-section">
+                <label>DRAGÕES ABATIDOS</label>
+                <label>0001</label>
+            </section>   
+        </div> 
+
+        <textarea class="screen-frame"
+            [(ngModel)]="srcContent"
+            placeholder="Escreva seu código-fonte"
+            *ngIf="screenMode === 'src'"
+        ></textarea>
+    </div>
     
     <div class="button-container">
         <div class="button-label-pair">
-            <button class="monitor-button btn-1" (click)="postCode()"></button>
-            <label class="bold">POWER</label>
+            <button class="monitor-button btn-1" (click)="escreverBtn()"></button>
+            <label class="bold lbl-btn-1">ESCREVER</label>
         </div>
 
         <div class="button-label-trio">
-            <label>ON</label>
-            <button class="monitor-button btn-2" (click)="postCode()"></button>
-            <label>OFF</label>
+            <label>SRC</label>
+            <button class="monitor-button btn-2"></button>
+            <div class="label-pair-wrapper">
+                <label>OUT</label>
+                <label>PUT</label>
+            </div>
         </div>
 
         <div class="button-label-pair">
-            <label>BRIGHT</label>
+            <label>COMPILAR</label>
             <button class="monitor-button btn-3" (click)="postCode()"></button>
         </div>
     </div>

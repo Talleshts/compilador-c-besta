@@ -12,15 +12,34 @@
     padding: 10px;
 }
 
+.screen-wrapper {
+    line-height: 0px;
+}
+
 .screen-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #a495aa;
     border: 2px solid #16131C;
     border-radius: 40px;
     min-width: 368.5px;
     height: 285px;
     min-height: 100%;
-    padding: 20px;
     margin-right: 10px;
+}
+
+.screen-frame img {
+    width: 70%;
+    margin-right: -20px;
+    object-fit: contain;
+}
+
+.screen-bottom-section {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
 }
 
 .button-container {
@@ -41,9 +60,18 @@
 
 .button-label-trio {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+.label-pair-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.label-pair-wrapper label {
+    line-height: 15px;
 }
 
 .monitor-button {
@@ -54,6 +82,7 @@
 }
 
 .btn-1 {
+    cursor: pointer;
     background-color: #16131C;
 }
 
@@ -68,6 +97,7 @@
 }
 
 .btn-3 {
+    cursor: pointer;
     background-color: #ecd6c1;
 }
 
@@ -174,10 +204,24 @@
     margin-left: -15px;
 }
 
+.bold {
+    font-weight:bold;
+}
+
+.btn-1, .lbl-btn-1 {
+    color: #fe4a3c;
+}
+
+#dragon {
+    margin-right: -20px;
+}
+
 textarea {
+    padding: 20px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: small;
     resize: none;
+    line-height: 1.5;
 }
 
 label {
@@ -185,8 +229,4 @@ label {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 100;
     letter-spacing: 0.1rem;
-}
-
-.bold {
-    font-weight:bold;
 }

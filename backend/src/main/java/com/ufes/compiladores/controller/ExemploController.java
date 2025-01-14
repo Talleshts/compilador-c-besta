@@ -22,11 +22,11 @@ public class ExemploController {
 	}
 
 	@PostMapping("/post")
-	public ResponseDTO postMethodName(@RequestBody String entity) {
-		return new ResponseDTO(
-			"success",
-			1,
-			2
-		);
+	public ResponseDTO[] postMethodName(@RequestBody String entity) {
+		return new ResponseDTO[] {
+			new ResponseDTO("success", 1, 2),
+			new ResponseDTO("success", 3, 4),
+			new ResponseDTO("success", 5, 6)
+		};
 	}	
 }
