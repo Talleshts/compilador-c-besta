@@ -42,4 +42,8 @@ public class Token {
         return erro;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Token[type=%s, value=%s, line=%d, column=%d]", tipo, palavra, linha, coluna, tamanho);
+    }
 }
