@@ -27,12 +27,14 @@ public class AnalizadorLexicoService {
 	private static final Set<String> DELIMITADORES = new HashSet<>(Arrays.asList(
 			"(", ")", "{", "}", "[", "]", ";", ",", "#"));
 
-	private static final Pattern IDENTIFICADOR_PATTERN = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]{0,30}");
+	private static final Pattern IDENTIFICADOR_PATTERN = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]*");
 	private static final Pattern NUMERO_PATTERN = Pattern.compile("^[0-9]+(\\.[0-9]+)?");
 	private static final Pattern COMENTARIO_LINHA_PATTERN = Pattern.compile("^//.*");
 	private static final Pattern COMENTARIO_BLOCO_INICIO_PATTERN = Pattern.compile("^/\\*");
 	private static final Pattern COMENTARIO_BLOCO_FIM_PATTERN = Pattern.compile("^\\*/");
 	private static final Pattern LITERAL_PATTERN = Pattern.compile("^'[^']*'");
+
+	private static final int MAX_IDENTIFIER_LENGTH = 31;
 
 	public List<Token> analisar(String codigo) {
 		List<Token> tokens = new ArrayList<>();
@@ -90,14 +92,22 @@ public class AnalizadorLexicoService {
 				Matcher idMatcher = IDENTIFICADOR_PATTERN.matcher(restoDaLinha);
 				if (idMatcher.find()) {
 					String id = idMatcher.group();
-					if (id.length() > 31) {
-						tokens.add(new Token("ERRO", "Identificador excede 31 caracteres: " + id,
-								numLinha + 1, coluna + 1));
+					// Verifica o comprimento do identificador antes de processá-lo
+					if (id.length() > MAX_IDENTIFIER_LENGTH) {
+						// Marca apenas os primeiros 31 caracteres como identificador válido
+						String idValido = id.substring(0, MAX_IDENTIFIER_LENGTH);
+						tokens.add(new Token("ID", idValido, numLinha + 1, coluna + 1));
+						// Marca o restante como erro
+						String idExcedente = id.substring(MAX_IDENTIFIER_LENGTH);
+						tokens.add(new Token("ERRO",
+								"Identificador excede o limite de 31 caracteres: '" + idExcedente + "'",
+								numLinha + 1, coluna + MAX_IDENTIFIER_LENGTH + 1));
+						coluna += id.length();
 					} else {
 						String tipo = PALAVRAS_RESERVADAS.contains(id.toLowerCase()) ? "PALAVRA_RESERVADA" : "ID";
 						tokens.add(new Token(tipo, id, numLinha + 1, coluna + 1));
+						coluna += id.length();
 					}
-					coluna += id.length();
 					continue;
 				}
 
@@ -138,7 +148,8 @@ public class AnalizadorLexicoService {
 					continue;
 
 				// Caractere não reconhecido
-				tokens.add(new Token("ERRO", String.valueOf(linha.charAt(coluna)),
+				tokens.add(new Token("ERRO",
+						"Caractere não reconhecido: '" + linha.charAt(coluna) + "'",
 						numLinha + 1, coluna + 1));
 				coluna++;
 			}
