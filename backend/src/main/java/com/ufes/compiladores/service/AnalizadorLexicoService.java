@@ -94,13 +94,8 @@ public class AnalizadorLexicoService {
 					String id = idMatcher.group();
 					// Verifica o comprimento do identificador antes de processá-lo
 					if (id.length() > MAX_IDENTIFIER_LENGTH) {
-						// Marca apenas os primeiros 31 caracteres como identificador válido
-						String idValido = id.substring(0, MAX_IDENTIFIER_LENGTH);
-						tokens.add(new Token("ID", idValido, numLinha + 1, coluna + 1));
-						// Marca o restante como erro
-						String idExcedente = id.substring(MAX_IDENTIFIER_LENGTH);
 						tokens.add(new Token("ERRO",
-								"Identificador excede o limite de 31 caracteres: '" + idExcedente + "'",
+								"Identificador excede o limite de 31 caracteres: '" + id + "'",
 								numLinha + 1, coluna + MAX_IDENTIFIER_LENGTH + 1));
 						coluna += id.length();
 					} else {
