@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CodeStoreService {
-
   // Endpoint fake pra testar o payload do POST
   // private apiUrl: string = 'https://jsonplaceholder.typicode.com/posts';
 
-  private apiUrl: string = 'http://localhost:8080/api/post';
+  private apiUrl: string = 'http://localhost:8080/api/analyze';
 
   constructor(private http: HttpClient) {}
 

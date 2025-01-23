@@ -2,48 +2,52 @@ package com.ufes.compiladores.models;
 
 public class Token {
 
-    private String palavra;
     private String tipo;
-    private Integer linha;
-    private Integer coluna;
-    private Integer tamanho;
-    private boolean erro;
+	private String lexema;
+	private int linha;
+	private int coluna;
 
-    public Token(String palavra, String tipo, Integer linha, Integer coluna, Integer tamanho, boolean erro) {
-        this.palavra = palavra;
+	public Token(String tipo, String lexema, int linha, int coluna) {
         this.tipo = tipo;
+		this.lexema = lexema;
         this.linha = linha;
-        this.coluna = coluna;
-        this.tamanho = tamanho;
-        this.erro = erro;
-    }
-
-    public String getPalavra() {
-        return palavra;
+		this.coluna = coluna;
     }
 
     public String getTipo() {
-        return tipo;
+		return tipo;
     }
 
-    public Integer getLinha() {
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getLexema() {
+		return lexema;
+	}
+
+	public void setLexema(String lexema) {
+		this.lexema = lexema;
+	}
+
+	public int getLinha() {
         return linha;
     }
 
-    public Integer getColuna() {
-        return coluna;
+	public void setLinha(int linha) {
+		this.linha = linha;
     }
 
-    public Integer getTamanho() {
-        return tamanho;
+	public int getColuna() {
+		return coluna;
     }
 
-    public boolean isErro() {
-        return erro;
+	public void setColuna(int coluna) {
+		this.coluna = coluna;
     }
 
     @Override
     public String toString() {
-        return String.format("Token[type=%s, value=%s, line=%d, column=%d]", tipo, palavra, linha, coluna, tamanho);
+		return String.format("Token[type=%s, value=%s, line=%d, column=%d]", tipo, lexema, linha, coluna);
     }
 }

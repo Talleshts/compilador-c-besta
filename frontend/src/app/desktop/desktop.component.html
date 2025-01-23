@@ -7,8 +7,8 @@
             <section class="screen-bottom-section">
                 <label>DRAGÕES ABATIDOS</label>
                 <label>0001</label>
-            </section>   
-        </div> 
+            </section>
+            </div>
 
         <textarea id="textAreaSrc"
             class="screen-frame"
@@ -17,14 +17,17 @@
             *ngIf="screenMode === 'src'"
         ></textarea>
 
-        <textarea id="textAreaOutput"
-            class="screen-frame"
-            [(ngModel)]="outputContent"
-            placeholder="Erros aqui"
-            *ngIf="screenMode === 'output'"
-        ></textarea>
+        <div class="screen-frame output-container" *ngIf="screenMode === 'output'">
+          <div class="token-list">
+            <div class="token-item" *ngFor="let token of tokens" [class.error-token]="token.tipo === 'ERRO'">
+              <span class="token-type" [attr.data-type]="token.tipo">[{{token.tipo}}]</span>
+              <span class="token-lexema">"{{token.lexema}}"</span>
+              <span class="token-position">(linha: {{token.linha}}, coluna: {{token.coluna}})</span>
+            </div>
+          </div>
+        </div>
     </div>
-    
+
     <div class="button-container">
         <div class="button-label-pair">
             <button class="monitor-button btn-1" (click)="escreverBtn()"></button>

@@ -231,3 +231,75 @@ label {
     font-weight: 100;
     letter-spacing: 0.1rem;
 }
+
+.output-container {
+    padding: 1rem;
+    overflow-y: auto;
+    font-family: monospace;
+    background-color: #a495aa;
+}
+
+.token-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.token-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.token-type {
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.token-type[data-type="PALAVRA_RESERVADA"] {
+    color: #007acc; /* Azul para palavras reservadas */
+}
+
+.token-type[data-type="ID"] {
+    color: #4ec9b0; /* Verde água para identificadores */
+}
+
+.token-type[data-type="INT_LITERAL"],
+.token-type[data-type="FLOAT_LITERAL"] {
+    color: #b5cea8; /* Verde claro para números */
+}
+
+.token-type[data-type="LITERAL"] {
+    color: #ce9178; /* Laranja para strings */
+}
+
+.token-type[data-type="OPERADOR"] {
+    color: #d4d4d4; /* Cinza claro para operadores */
+}
+
+.token-type[data-type="DELIMITADOR"] {
+    color: #808080; /* Cinza para delimitadores */
+}
+
+.token-type[data-type="ERRO"] {
+    color: #f44747; /* Vermelho para erros */
+}
+
+.token-lexema {
+    color: #d4d4d4;
+    font-family: 'Consolas', monospace;
+}
+
+.token-position {
+    color: #808080;
+    font-size: 0.9em;
+    margin-left: auto;
+}
+
+.error-token {
+    background-color: rgba(244, 71, 71, 0.1);
+    border: 1px solid #f44747;
+}
