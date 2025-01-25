@@ -264,32 +264,32 @@ label {
 }
 
 .token-type[data-type="PALAVRA_RESERVADA"] {
-    color: #007acc; /* Azul para palavras reservadas */
+    color: #0057e7; /* Azul para palavras reservadas */
 }
 
 .token-type[data-type="ID"] {
-    color: #4ec9b0; /* Verde água para identificadores */
+    color: #009700; /* Verde água para identificadores */
 }
 
 .token-type[data-type="INT_LITERAL"],
 .token-type[data-type="FLOAT_LITERAL"] {
-    color: #b5cea8; /* Verde claro para números */
+    color: #e6fc25; /* Verde claro para números */
 }
 
 .token-type[data-type="LITERAL"] {
-    color: #ce9178; /* Laranja para strings */
+    color: #f13ebc; /* Laranja para strings */
 }
 
 .token-type[data-type="OPERADOR"] {
-    color: #d4d4d4; /* Cinza claro para operadores */
+    color: #ffffff; /* Cinza claro para operadores */
 }
 
 .token-type[data-type="DELIMITADOR"] {
-    color: #808080; /* Cinza para delimitadores */
+    color: #cccccc; /* Cinza para delimitadores */
 }
 
 .token-type[data-type="ERRO"] {
-    color: #f44747; /* Vermelho para erros */
+    color: #ff4c4c; /* Vermelho para erros */
 }
 
 .token-lexema {
