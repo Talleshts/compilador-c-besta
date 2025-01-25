@@ -21,8 +21,8 @@
           <div class="token-list">
             <div class="token-item" *ngFor="let token of tokens" [class.error-token]="token.tipo === 'ERRO'">
               <span class="token-type" [attr.data-type]="token.tipo">[{{token.tipo}}]</span>
-              <span class="token-lexema">"{{token.lexema}}"</span>
               <span class="token-position">(linha: {{token.linha}}, coluna: {{token.coluna}})</span>
+              <span class="token-lexema">"{{token.lexema}}"</span>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="button-label-pair">
-            <label>COMPILAR</label>
+            <label>ANALISAR</label>
             <button class="monitor-button btn-3" (click)="compilarBtn()"></button>
         </div>
     </div>
