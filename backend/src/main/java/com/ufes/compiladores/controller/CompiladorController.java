@@ -22,8 +22,14 @@ public class CompiladorController {
 	@Autowired
 	private AnalizadorLexicoService lexicalAnalyzerService;
 
-	@PostMapping("/analyze")
-	public ResponseEntity<List<Token>> analyzeCode(@RequestBody CodeDTO codeDTO) {
+	@PostMapping("/analyze-lexica")
+	public ResponseEntity<List<Token>> analyzeLexicaCode(@RequestBody CodeDTO codeDTO) {
+		List<Token> tokens = lexicalAnalyzerService.analisar(codeDTO.getCode());
+		return ResponseEntity.ok(tokens);
+	}
+
+	@PostMapping("/analyze-sintatica")
+	public ResponseEntity<List<Token>> analyzeSintaticaCode(@RequestBody CodeDTO codeDTO) {
 		List<Token> tokens = lexicalAnalyzerService.analisar(codeDTO.getCode());
 		return ResponseEntity.ok(tokens);
 	}

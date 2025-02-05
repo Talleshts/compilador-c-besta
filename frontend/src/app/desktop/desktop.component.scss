@@ -56,6 +56,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    >button:hover{
+        background-color: #0057e7;
+    }
 }
 
 .button-label-trio {
@@ -63,6 +67,19 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+.button-options{
+    border: 1px black solid;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    p{
+        border: 1px black solid;
+        padding: 0px 0.8rem;
+    }
 }
 
 .label-pair-wrapper {

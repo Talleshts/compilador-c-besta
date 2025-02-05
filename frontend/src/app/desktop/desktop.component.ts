@@ -75,7 +75,7 @@ export class DesktopComponent implements OnInit {
 
   postCode(): void {
     if (this.screenMode == 'src') {
-      this.codeStoreService.postCode(this.srcContent).subscribe({
+      this.codeStoreService.analisadorLexico(this.srcContent).subscribe({
         next: (response: Token[]) => {
           console.log('Código analisado com sucesso:', response);
           this.tokens = response;
@@ -98,7 +98,32 @@ export class DesktopComponent implements OnInit {
       .join('\n');
   }
 
-  compilarBtn(): void {
+  compilarLexicoBtn(): void {
+    if (this.srcContent.trim()) {
+      this.postCode();
+      this.screenMode = 'output';
+
+      const btn1Elements = document.querySelectorAll('.btn-1');
+      const lblBtn1Elements = document.querySelectorAll('.lbl-btn-1');
+      const lblSrc = document.getElementById('lbl-src');
+      const lblOutput = document.querySelectorAll('.lbl-output');
+
+      btn1Elements.forEach((btn) => {
+        this.renderer.setStyle(btn, 'background-color', '#16131C');
+      });
+      lblBtn1Elements.forEach((label) => {
+        this.renderer.setStyle(label, 'color', '#16131C');
+      });
+      this.renderer.setStyle(lblSrc, 'color', '#16131C');
+      lblOutput.forEach((label) => {
+        this.renderer.setStyle(label, 'color', '#fe4a3c');
+      });
+    } else {
+      alert('O campo de código está vazio.');
+    }
+  }
+
+  compilarSintaticoBtn(): void {
     if (this.srcContent.trim()) {
       this.postCode();
       this.screenMode = 'output';

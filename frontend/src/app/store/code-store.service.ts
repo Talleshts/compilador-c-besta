@@ -9,11 +9,16 @@ export class CodeStoreService {
   // Endpoint fake pra testar o payload do POST
   // private apiUrl: string = 'https://jsonplaceholder.typicode.com/posts';
 
-  private apiUrl: string = 'http://localhost:8080/api/analyze';
+  private apiUrlLexico: string = 'http://localhost:8080/api/analyze-lexica';
+  private apiUrlSintatico: string = 'http://localhost:8080/api/analyze-sintatica';
 
   constructor(private http: HttpClient) {}
 
-  postCode(codeContent: string): Observable<any> {
-    return this.http.post(this.apiUrl, { code: codeContent });
+  analisadorLexico(codeContent: string): Observable<any> {
+    return this.http.post(this.apiUrlLexico, { code: codeContent });
+  }
+
+  analisadorSintatico(codeContent: string): Observable<SyntaxError[]>{
+    return this.http.post<SyntaxError[]>(this.apiUrlSintatico, { code: codeContent });
   }
 }
