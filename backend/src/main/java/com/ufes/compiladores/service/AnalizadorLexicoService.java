@@ -1,31 +1,19 @@
 package com.ufes.compiladores.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
+import com.ufes.compiladores.models.Delimitadores;
+import com.ufes.compiladores.models.Operadores;
+import com.ufes.compiladores.models.PalavrasReservadas;
 import com.ufes.compiladores.models.Token;
 
 @Service
 public class AnalizadorLexicoService {
-
-	private static final Set<String> PALAVRAS_RESERVADAS = new HashSet<>(Arrays.asList(
-			"auto", "static", "extern", "const", "void", "char", "float", "double",
-			"signed", "unsigned", "short", "int", "long", "return", "if", "else",
-			"printf", "scanf", "break", "while", "for"));
-
-	private static final Set<String> OPERADORES = new HashSet<>(Arrays.asList(
-			"+", "-", "*", "/", "=", "==", "!=", "<", "<=", ">", ">=", "+=", "-=",
-			"*=", "/=", "%=", "&&", "||"));
-
-	private static final Set<String> DELIMITADORES = new HashSet<>(Arrays.asList(
-			"(", ")", "{", "}", "[", "]", ";", ",", "#"));
 
 	private static final Pattern IDENTIFICADOR_PATTERN = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]*");
 	private static final Pattern NUMERO_PATTERN = Pattern.compile("^[0-9]+(\\.[0-9]+)?");
@@ -99,7 +87,9 @@ public class AnalizadorLexicoService {
 								numLinha + 1, coluna + MAX_IDENTIFIER_LENGTH + 1));
 						coluna += id.length();
 					} else {
-						String tipo = PALAVRAS_RESERVADAS.contains(id.toLowerCase()) ? "PALAVRA_RESERVADA" : "ID";
+						String tipo = PalavrasReservadas.PALAVRAS_RESERVADAS.contains(id.toLowerCase())
+								? "PALAVRA_RESERVADA"
+								: "ID";
 						tokens.add(new Token(tipo, id, numLinha + 1, coluna + 1));
 						coluna += id.length();
 					}
@@ -118,7 +108,7 @@ public class AnalizadorLexicoService {
 
 				// Verifica operadores (do maior para o menor)
 				boolean operadorEncontrado = false;
-				for (String op : OPERADORES) {
+				for (String op : Operadores.OPERADORES) {
 					if (restoDaLinha.startsWith(op)) {
 						tokens.add(new Token("OPERADOR", op, numLinha + 1, coluna + 1));
 						coluna += op.length();
@@ -131,7 +121,7 @@ public class AnalizadorLexicoService {
 
 				// Verifica delimitadores
 				boolean delimitadorEncontrado = false;
-				for (String del : DELIMITADORES) {
+				for (String del : Delimitadores.DELIMITADORES) {
 					if (restoDaLinha.startsWith(del)) {
 						tokens.add(new Token("DELIMITADOR", del, numLinha + 1, coluna + 1));
 						coluna += del.length();

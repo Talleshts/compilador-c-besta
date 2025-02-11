@@ -74,9 +74,9 @@ export class DesktopComponent implements OnInit {
   postCode(): void {
     if (this.screenMode == 'src') {
       this.codeStoreService.analyzeLexica(this.srcContent).subscribe({
-        next: (response: CustomToken[]) => {
+        next: (response: any) => {
           console.log('Código analisado com sucesso:', response);
-          this.tokens = response;
+          this.tokens = response.tokens || [];
           this.formatOutput();
         },
         error: (error) => {
@@ -90,9 +90,9 @@ export class DesktopComponent implements OnInit {
   postCodeSintatico(): void {
     if (this.screenMode == 'src') {
       this.codeStoreService.analyzeSintatica(this.srcContent).subscribe({
-        next: (response: ErroSintatico[]) => {
+        next: (response: any) => {
           console.log('Análise sintática realizada com sucesso:', response);
-          this.errosSintaticos = response;
+          this.errosSintaticos = response.errosSintaticos || [];
           this.formatOutputSintatico();
         },
         error: (error) => {

@@ -1,9 +1,7 @@
 <div class="monitor-frame">
-
     <div class="screen-wrapper">
-
         <div class="screen-frame" *ngIf="screenMode === ''">
-            <img id="dragon" [src]="currentDragonImage" alt="Dragon">
+            <img id="dragon" [src]="currentDragonImage" alt="Dragon" />
             <section class="screen-bottom-section">
                 <label>DRAGÕES ABATIDOS</label>
                 <label>0001</label>
@@ -18,23 +16,23 @@
                 <h3>Tokens:</h3>
                 <div class="token-list">
                     <div class="token-item" *ngFor="let token of tokens" [class.error-token]="token.tipo === 'ERRO'">
-                        <span class="token-type" [attr.data-type]="token.tipo">[{{token.tipo}}]</span>
-                        <span class="token-position">(linha: {{token.linha}}, coluna: {{token.coluna}})</span>
-                        <span class="token-lexema">"{{token.lexema}}"</span>
+                        <span class="token-type" [attr.data-type]="token.tipo">[{{ token.tipo }}]</span>
+                        <span class="token-position">(linha: {{ token.linha }}, coluna: {{ token.coluna }})</span>
+                        <span class="token-lexema">"{{ token.lexema }}"</span>
                     </div>
                 </div>
-                </div>
+            </div>
             <div class="output-section" *ngIf="errosSintaticos.length > 0">
                 <h3>Erros Sintáticos:</h3>
                 <div class="error-list">
                     <div class="error-item" *ngFor="let erro of errosSintaticos">
-                        <span class="error-message">Erro: {{erro.mensagem}}</span>
-                        <span class="error-position">(linha: {{erro.linha}}, coluna: {{erro.coluna}})</span>
-                        <span class="error-sugestao">Sugestão: {{erro.sugestao}}</span>
+                        <span class="error-message">Erro: {{ erro.mensagem }}</span>
+                        <span class="error-position">(linha: {{ erro.linha }}, coluna: {{ erro.coluna }})</span>
+                        <span class="error-sugestao">Sugestão: {{ erro.sugestao }}</span>
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 
     <div class="button-container">
@@ -65,13 +63,11 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div class="monitor-neck"></div>
 
 <div class="desktop-body">
-
     <div class="desktop-body-left">
         <div class="lil-square"></div>
 

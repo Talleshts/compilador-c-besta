@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufes.compiladores.dto.CodeDTO;
+import com.ufes.compiladores.dto.ResponseDTO;
 import com.ufes.compiladores.models.ErroSintatico;
 import com.ufes.compiladores.models.Token;
 import com.ufes.compiladores.service.AnalisadorSintaticoService;
@@ -28,14 +29,16 @@ public class CompiladorController {
 	private AnalisadorSintaticoService sintaticoAnalyzerService;
 
 	@PostMapping("/analyze-lexica")
-	public ResponseEntity<List<Token>> analyzeLexicaCode(@RequestBody CodeDTO codeDTO) {
+	public ResponseEntity<ResponseDTO> analyzeLexicaCode(@RequestBody CodeDTO codeDTO) {
 		List<Token> tokens = lexicalAnalyzerService.analisar(codeDTO.getCode());
-		return ResponseEntity.ok(tokens);
+		ResponseDTO response = new ResponseDTO(tokens, null, null, null);
+		return ResponseEntity.ok(response);
 	}
 
 	@PostMapping("/analyze-sintatica")
-	public ResponseEntity<List<ErroSintatico>> analyzeSintaticaCode(@RequestBody CodeDTO codeDTO) {
+	public ResponseEntity<ResponseDTO> analyzeSintaticaCode(@RequestBody CodeDTO codeDTO) {
 		List<ErroSintatico> errors = sintaticoAnalyzerService.analisar(codeDTO.getCode());
-		return ResponseEntity.ok(errors);
+		ResponseDTO response = new ResponseDTO(null, errors, null, null);
+		return ResponseEntity.ok(response);
 	}
 }
