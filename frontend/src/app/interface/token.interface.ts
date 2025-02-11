@@ -1,4 +1,4 @@
-export interface Token {
+export interface CustomToken {
   tipo: string;
   lexema: string;
   linha: number;

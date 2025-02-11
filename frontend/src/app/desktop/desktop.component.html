@@ -8,24 +8,33 @@
                 <label>DRAGÕES ABATIDOS</label>
                 <label>0001</label>
             </section>
-            </div>
+        </div>
 
-        <textarea id="textAreaSrc"
-            class="screen-frame"
-            [(ngModel)]="srcContent"
-            placeholder="Escreva seu código-fonte"
-            *ngIf="screenMode === 'src'"
-        ></textarea>
+        <textarea id="textAreaSrc" class="screen-frame" [(ngModel)]="srcContent" placeholder="Escreva seu código-fonte"
+            *ngIf="screenMode === 'src'"></textarea>
 
         <div class="screen-frame output-container" *ngIf="screenMode === 'output'">
-          <div class="token-list">
-            <div class="token-item" *ngFor="let token of tokens" [class.error-token]="token.tipo === 'ERRO'">
-              <span class="token-type" [attr.data-type]="token.tipo">[{{token.tipo}}]</span>
-              <span class="token-position">(linha: {{token.linha}}, coluna: {{token.coluna}})</span>
-              <span class="token-lexema">"{{token.lexema}}"</span>
+            <div class="output-section">
+                <h3>Tokens:</h3>
+                <div class="token-list">
+                    <div class="token-item" *ngFor="let token of tokens" [class.error-token]="token.tipo === 'ERRO'">
+                        <span class="token-type" [attr.data-type]="token.tipo">[{{token.tipo}}]</span>
+                        <span class="token-position">(linha: {{token.linha}}, coluna: {{token.coluna}})</span>
+                        <span class="token-lexema">"{{token.lexema}}"</span>
+                    </div>
+                </div>
+                </div>
+            <div class="output-section" *ngIf="errosSintaticos.length > 0">
+                <h3>Erros Sintáticos:</h3>
+                <div class="error-list">
+                    <div class="error-item" *ngFor="let erro of errosSintaticos">
+                        <span class="error-message">Erro: {{erro.mensagem}}</span>
+                        <span class="error-position">(linha: {{erro.linha}}, coluna: {{erro.coluna}})</span>
+                        <span class="error-sugestao">Sugestão: {{erro.sugestao}}</span>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
+            </div>
     </div>
 
     <div class="button-container">
@@ -66,8 +75,7 @@
     <div class="desktop-body-left">
         <div class="lil-square"></div>
 
-        <div class="vertical-line"
-        *ngFor="let number of [].constructor(11)"></div>
+        <div class="vertical-line" *ngFor="let number of [].constructor(11)"></div>
     </div>
 
     <div class="desktop-body-right">

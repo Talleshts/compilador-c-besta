@@ -1,24 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ErroSintatico } from '../interface/erro-sintatico.interface';
+import { CustomToken } from '../interface/token.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CodeStoreService {
-  // Endpoint fake pra testar o payload do POST
-  // private apiUrl: string = 'https://jsonplaceholder.typicode.com/posts';
-
-  private apiUrlLexico: string = 'http://localhost:8080/api/analyze-lexica';
-  private apiUrlSintatico: string = 'http://localhost:8080/api/analyze-sintatica';
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
-  analisadorLexico(codeContent: string): Observable<any> {
-    return this.http.post(this.apiUrlLexico, { code: codeContent });
+  analyzeLexica(code: string): Observable<CustomToken[]> {
+    return this.http.post<CustomToken[]>(`${this.apiUrl}/analyze-lexica`, {
+      code,
+    });
   }
 
-  analisadorSintatico(codeContent: string): Observable<SyntaxError[]>{
-    return this.http.post<SyntaxError[]>(this.apiUrlSintatico, { code: codeContent });
+  analyzeSintatica(code: string): Observable<ErroSintatico[]> {
+    return this.http.post<ErroSintatico[]>(`${this.apiUrl}/analyze-sintatica`, {
+      code,
+    });
   }
 }

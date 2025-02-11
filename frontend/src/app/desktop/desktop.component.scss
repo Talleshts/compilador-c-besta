@@ -256,6 +256,10 @@ label {
     background-color: #a495aa;
 }
 
+.output-section {
+    margin-bottom: 1rem;
+}
+
 .token-list {
     display: flex;
     flex-direction: column;
@@ -326,4 +330,44 @@ label {
 .error-token {
     background-color: rgba(244, 71, 71, 0.1);
     border: 1px solid #f44747;
+}
+
+//Saída do analisador sintático
+
+.error-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.error-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 1px solid #ff4c4c;
+}
+
+.error-message {
+  font-weight: bold;
+  color: #ff4c4c;
+  min-width: 90px;
+  flex: 1 1 auto;
+}
+
+.error-position {
+  color: #d4d4d4;
+  font-size: 0.9em;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.error-sugestao {
+  color: #d4d4d4;
+  font-size: 0.9em;
+  flex: 1 1 auto;
 }

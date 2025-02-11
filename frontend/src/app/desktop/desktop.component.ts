@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Token } from '../interface/token.interface';
+import { ErroSintatico } from '../interface/erro-sintatico.interface';
+import { CustomToken } from '../interface/token.interface';
 import { CodeStoreService } from '../store/code-store.service';
 
 @Component({
@@ -12,8 +13,10 @@ export class DesktopComponent implements OnInit {
   screenMode: string = '';
   srcContent: string = '';
   outputContent: string = '';
+  code: string = '';
   isDefaultColor: boolean = true;
-  tokens: Token[] = [];
+  tokens: CustomToken[] = [];
+  errosSintaticos: ErroSintatico[] = [];
   currentDragonImage: string = '../../assets/dragon.png';
 
   constructor(
@@ -49,6 +52,7 @@ export class DesktopComponent implements OnInit {
     this.screenMode = 'src';
     this.outputContent = '';
     this.tokens = [];
+    this.errosSintaticos = [];
 
     const btn1Elements = document.querySelectorAll('.btn-1');
     const lblBtn1Elements = document.querySelectorAll('.lbl-btn-1');
@@ -67,16 +71,10 @@ export class DesktopComponent implements OnInit {
     });
   }
 
-  // Setter para alterar a propriedade e executar uma ação sempre que ela mudar
-  // set lexicalErrorsPosition(value: number[][]) {
-  //   this._lexicalErrorsPosition = value;
-  //   console.log('lexicalErrorsPosition foi alterado para:', value); // Mensagem no console
-  // }
-
   postCode(): void {
     if (this.screenMode == 'src') {
-      this.codeStoreService.analisadorLexico(this.srcContent).subscribe({
-        next: (response: Token[]) => {
+      this.codeStoreService.analyzeLexica(this.srcContent).subscribe({
+        next: (response: CustomToken[]) => {
           console.log('Código analisado com sucesso:', response);
           this.tokens = response;
           this.formatOutput();
@@ -89,11 +87,36 @@ export class DesktopComponent implements OnInit {
     }
   }
 
+  postCodeSintatico(): void {
+    if (this.screenMode == 'src') {
+      this.codeStoreService.analyzeSintatica(this.srcContent).subscribe({
+        next: (response: ErroSintatico[]) => {
+          console.log('Análise sintática realizada com sucesso:', response);
+          this.errosSintaticos = response;
+          this.formatOutputSintatico();
+        },
+        error: (error) => {
+          console.error('Erro ao realizar análise sintática:', error);
+          this.outputContent = 'Erro ao realizar análise sintática.';
+        },
+      });
+    }
+  }
+
   private formatOutput(): void {
     this.outputContent = this.tokens
       .map(
         (token) =>
           `[${token.tipo}] "${token.lexema}" (linha: ${token.linha}, coluna: ${token.coluna})`
+      )
+      .join('\n');
+  }
+
+  private formatOutputSintatico(): void {
+    this.outputContent = this.errosSintaticos
+      .map(
+        (erro) =>
+          `Erro: ${erro.mensagem} (linha: ${erro.linha}, coluna: ${erro.coluna})\nSugestão: ${erro.sugestao}`
       )
       .join('\n');
   }
@@ -125,7 +148,7 @@ export class DesktopComponent implements OnInit {
 
   compilarSintaticoBtn(): void {
     if (this.srcContent.trim()) {
-      this.postCode();
+      this.postCodeSintatico();
       this.screenMode = 'output';
 
       const btn1Elements = document.querySelectorAll('.btn-1');
