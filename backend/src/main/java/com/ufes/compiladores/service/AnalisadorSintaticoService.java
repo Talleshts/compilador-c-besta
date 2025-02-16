@@ -381,7 +381,8 @@ public class AnalisadorSintaticoService {
 	private void fator() {
 		Token token = tokens.get(currentTokenIndex);
 		if (token.getTipo().equals("INT_LITERAL") || 
-			token.getTipo().equals("FLOAT_LITERAL")) {
+				token.getTipo().equals("FLOAT_LITERAL") ||
+				token.getTipo().equals("STRING_LITERAL")) {
 			currentTokenIndex++;
 		}
 		else if (token.getTipo().equals("ID")) {
@@ -399,8 +400,9 @@ public class AnalisadorSintaticoService {
 			match(")");
 		}
 		else {
-			throw new SyntaxException("Fator inválido: " + token.getLexema(), 
-				"Esperava um número, identificador ou expressão entre parênteses.");
+			throw new SyntaxException(
+					"Fator inválido: " + token.getLexema(),
+					"Esperava um número, string, identificador ou expressão entre parênteses.");
 		}
 	}
 
