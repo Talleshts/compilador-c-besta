@@ -47,15 +47,25 @@ public class AnalisadorSintaticoService {
 			match("#");
 			match("define");
 			matchTipo("ID");
-			matchTipo("INT_LITERAL");
-			programa();
+			// Verifica se é um literal inteiro ou float
+			Token nextToken = tokens.get(currentTokenIndex);
+			if (nextToken.getTipo().equals("INT_LITERAL") || nextToken.getTipo().equals("FLOAT_LITERAL")) {
+				currentTokenIndex++;
+				programa();
+			} else {
+				throw new SyntaxException(
+					"Valor inválido para #define: " + nextToken.getLexema(),
+					"Use um número inteiro ou decimal (por exemplo: 100 ou 3.14)");
+			}
 		} else if (isDeclaracao(token)) {
 			especificador();
 			tipo();
 			matchTipo("ID");
 			programa2();
 		} else {
-			throw new SyntaxException("Token inesperado: " + token.getLexema(), "Esperava uma declaração de variável ou função.");
+			throw new SyntaxException(
+				"Token inesperado: " + token.getLexema(), 
+				"Esperava uma declaração de variável ou função.");
 		}
 	}
 
