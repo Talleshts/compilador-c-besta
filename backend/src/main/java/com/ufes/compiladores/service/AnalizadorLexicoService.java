@@ -21,6 +21,7 @@ public class AnalizadorLexicoService {
 	private static final Pattern COMENTARIO_BLOCO_INICIO_PATTERN = Pattern.compile("^/\\*");
 	private static final Pattern COMENTARIO_BLOCO_FIM_PATTERN = Pattern.compile("^\\*/");
 	private static final Pattern LITERAL_PATTERN = Pattern.compile("^'[^']*'");
+	private static final Pattern STRING_LITERAL_PATTERN = Pattern.compile("^\"[^\"]*\"");
 
 	private static final int MAX_IDENTIFIER_LENGTH = 31;
 
@@ -64,6 +65,15 @@ public class AnalizadorLexicoService {
 				if (comentarioBlocoMatcher.find()) {
 					emComentarioBloco = true;
 					coluna += 2;
+					continue;
+				}
+
+				// Verifica literais de string
+				Matcher stringLiteralMatcher = STRING_LITERAL_PATTERN.matcher(restoDaLinha);
+				if (stringLiteralMatcher.find()) {
+					String stringLiteral = stringLiteralMatcher.group();
+					tokens.add(new Token("STRING_LITERAL", stringLiteral, numLinha + 1, coluna + 1));
+					coluna += stringLiteral.length();
 					continue;
 				}
 
