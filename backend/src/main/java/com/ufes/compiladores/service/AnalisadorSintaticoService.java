@@ -275,12 +275,12 @@ public class AnalisadorSintaticoService {
 					break;
 				default:
 					throw new SyntaxException("Instrução inválida: " + token.getLexema(), 
-						"Esperava uma instrução válida (if, return, printf, scanf, etc).");
+							"Esperava uma instrução válida (if, return, printf, scanf, break, etc).");
 			}
 		}
 		else {
 			throw new SyntaxException("Instrução inválida", 
-				"Esperava uma instrução válida (if, return, printf, scanf, etc).");
+					"Esperava uma instrução válida (if, return, printf, scanf, break, etc).");
 		}
 	}
 
