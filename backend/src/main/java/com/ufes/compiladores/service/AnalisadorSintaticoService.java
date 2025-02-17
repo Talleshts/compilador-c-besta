@@ -43,6 +43,10 @@ public class AnalisadorSintaticoService {
 			}
 		}
 
+		if (errors.isEmpty()) {
+			errors.add(new ErroSintatico("Parabéns! Nenhum erro de sintaxe encontrado.", 0, 0, ""));
+		}
+
 		return errors;
 	}
 
