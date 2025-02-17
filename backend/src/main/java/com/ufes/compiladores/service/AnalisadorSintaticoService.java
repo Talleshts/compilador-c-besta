@@ -23,17 +23,39 @@ public class AnalisadorSintaticoService {
 		tokens = lexicalAnalyzer.analisar(code);
 		currentTokenIndex = 0;
 
-		try {
-			programa();
-		} catch (SyntaxException e) {
-			errors.add(new ErroSintatico(
+		while (currentTokenIndex < tokens.size()) {
+			try {
+				programa();
+			} catch (SyntaxException e) {
+				errors.add(new ErroSintatico(
 					e.getMessage(),
 					tokens.get(currentTokenIndex).getLinha(),
 					tokens.get(currentTokenIndex).getColuna(),
 					e.getSuggestion()));
+
+				// Tenta recuperar do erro avançando até encontrar um ponto e vírgula ou chave
+				recuperarErro();
+			}
+
+			// Se chegamos ao fim dos tokens, saímos do loop
+			if (currentTokenIndex >= tokens.size()) {
+				break;
+			}
 		}
 
 		return errors;
+	}
+
+	private void recuperarErro() {
+		// Avança tokens até encontrar um ponto de sincronização (; ou })
+		while (currentTokenIndex < tokens.size()) {
+			Token token = tokens.get(currentTokenIndex);
+			if (token.getLexema().equals(";") || token.getLexema().equals("}")) {
+				currentTokenIndex++;
+				break;
+			}
+			currentTokenIndex++;
+		}
 	}
 
 	private void programa() {
