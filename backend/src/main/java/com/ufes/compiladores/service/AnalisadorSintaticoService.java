@@ -185,6 +185,11 @@ public class AnalisadorSintaticoService {
 		if (currentTokenIndex < tokens.size() && 
 			tokens.get(currentTokenIndex).getLexema().equals("[")) {
 			match("[");
+			// Verifica se tem um número, mas não exige
+			if (currentTokenIndex < tokens.size() &&
+					tokens.get(currentTokenIndex).getTipo().equals("INT_LITERAL")) {
+				currentTokenIndex++;
+			}
 			match("]");
 		}
 	}
