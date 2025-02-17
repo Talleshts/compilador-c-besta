@@ -118,7 +118,11 @@ public class AnalizadorLexicoService {
 
 				// Verifica operadores (do maior para o menor)
 				boolean operadorEncontrado = false;
-				for (String op : Operadores.OPERADORES) {
+				List<String> operadoresOrdenados = new ArrayList<>(Operadores.OPERADORES);
+				// Ordena operadores pelo comprimento (maior para menor)
+				operadoresOrdenados.sort((a, b) -> b.length() - a.length());
+
+				for (String op : operadoresOrdenados) {
 					if (restoDaLinha.startsWith(op)) {
 						tokens.add(new Token("OPERADOR", op, numLinha + 1, coluna + 1));
 						coluna += op.length();

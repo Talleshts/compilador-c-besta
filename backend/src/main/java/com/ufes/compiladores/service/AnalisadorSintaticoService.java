@@ -313,12 +313,12 @@ public class AnalisadorSintaticoService {
 		if (token.getTipo().equals("OPERADOR") && 
 			(token.getLexema().equals("=") || token.getLexema().equals("+=") || 
 			 token.getLexema().equals("-=") || token.getLexema().equals("*=") || 
-			 token.getLexema().equals("/="))) {
+						token.getLexema().equals("/=") || token.getLexema().equals("%="))) {
 			currentTokenIndex++;
 			exprRelacional();
 		} else {
 			throw new SyntaxException("Operador de atribuição inválido: " + token.getLexema(), 
-				"Use '=', '+=', '-=', '*=' ou '/='.");
+					"Use '=', '+=', '-=', '*=', '/=' ou '%='.");
 		}
 	}
 
