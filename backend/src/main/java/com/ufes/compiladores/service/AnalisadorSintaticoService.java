@@ -237,6 +237,54 @@ public class AnalisadorSintaticoService {
 		}
 		else if (token.getTipo().equals("PALAVRA_RESERVADA")) {
 			switch (token.getLexema()) {
+				case "for":
+					match("for");
+					match("(");
+					// Inicialização (opcional) - pode ser declaração ou expressão
+					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
+						if (isDeclaracao(tokens.get(currentTokenIndex))) {
+							tipo();
+							matchTipo("ID");
+							if (currentTokenIndex < tokens.size() &&
+									tokens.get(currentTokenIndex).getTipo().equals("OPERADOR") &&
+									tokens.get(currentTokenIndex).getLexema().equals("=")) {
+								match("=");
+								expr();
+							}
+						} else {
+							expr();
+						}
+					}
+					match(";");
+					// Condição (opcional)
+					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
+						expr();
+					}
+					match(";");
+					// Incremento (opcional)
+					if (!tokens.get(currentTokenIndex).getLexema().equals(")")) {
+						expr();
+					}
+					match(")");
+					if (currentTokenIndex < tokens.size() &&
+							tokens.get(currentTokenIndex).getLexema().equals("{")) {
+						bloco();
+					} else {
+						instrucao();
+					}
+					break;
+				case "while":
+					match("while");
+					match("(");
+					expr();
+					match(")");
+					if (currentTokenIndex < tokens.size() &&
+							tokens.get(currentTokenIndex).getLexema().equals("{")) {
+						bloco();
+					} else {
+						instrucao();
+					}
+					break;
 				case "if":
 					match("if");
 					match("(");
@@ -284,12 +332,12 @@ public class AnalisadorSintaticoService {
 					break;
 				default:
 					throw new SyntaxException("Instrução inválida: " + token.getLexema(), 
-							"Esperava uma instrução válida (if, return, printf, scanf, break, etc).");
+							"Esperava uma instrução válida (if, while, for, return, printf, scanf, break, etc).");
 			}
 		}
 		else {
 			throw new SyntaxException("Instrução inválida", 
-					"Esperava uma instrução válida (if, return, printf, scanf, break, etc).");
+					"Esperava uma instrução válida (if, while, for, return, printf, scanf, break, etc).");
 		}
 	}
 
@@ -299,7 +347,11 @@ public class AnalisadorSintaticoService {
 		Token token = tokens.get(currentTokenIndex);
 		
 		if (token.getTipo().equals("OPERADOR")) {
-			atribuicao();
+			if (token.getLexema().equals("++") || token.getLexema().equals("--")) {
+				currentTokenIndex++;
+			} else {
+				atribuicao();
+			}
 		}
 		else if (token.getTipo().equals("DELIMITADOR") && token.getLexema().equals("[")) {
 			match("[");
@@ -396,11 +448,20 @@ public class AnalisadorSintaticoService {
 		}
 		else if (token.getTipo().equals("ID")) {
 			matchTipo("ID");
-			if (currentTokenIndex < tokens.size() && 
-				tokens.get(currentTokenIndex).getLexema().equals("(")) {
-				match("(");
-				exprList();
-				match(")");
+			if (currentTokenIndex < tokens.size()) {
+				Token nextToken = tokens.get(currentTokenIndex);
+				if (nextToken.getLexema().equals("(")) {
+					match("(");
+					exprList();
+					match(")");
+				} else if (nextToken.getLexema().equals("[")) {
+					match("[");
+					expr();
+					match("]");
+				} else if (nextToken.getTipo().equals("OPERADOR") &&
+						(nextToken.getLexema().equals("++") || nextToken.getLexema().equals("--"))) {
+					currentTokenIndex++;
+				}
 			}
 		}
 		else if (token.getLexema().equals("(")) {
