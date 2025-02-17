@@ -5,12 +5,18 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "npm run build",
-        "outputDirectory": "dist/compilador-c-besta"
+        "distDir": "dist/compilador-c-besta"
       }
     }
   ],
   "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "/index.html"
