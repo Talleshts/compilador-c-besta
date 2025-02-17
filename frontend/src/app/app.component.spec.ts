@@ -20,16 +20,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'frontend_new'`, () => {
+  it(`should have as title 'compilador_c_besta'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('frontend_new');
+    expect(app.title).toEqual('compilador_c_besta');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, frontend_new');
+    expect(compiled.querySelector('h1')?.textContent).toContain(
+      'Hello, compilador_c_besta'
+    );
   });
 });
