@@ -11,7 +11,9 @@ import { CustomToken } from '../interface/token.interface';
 export class CodeStoreService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log('API URL:', this.apiUrl); // Para debug
+  }
 
   analyzeLexica(code: string): Observable<CustomToken[]> {
     return this.http.post<CustomToken[]>(`${this.apiUrl}/analyze-lexica`, {

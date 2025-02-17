@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://compilador-c-besta-production.up.railway.app/api',
+  apiUrl: 'https://compilador-c-besta.railway.internal/api',
 };

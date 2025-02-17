@@ -4,6 +4,9 @@
   "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": "dist/compilador-c-besta",
   "framework": "angular",
+  "env": {
+    "PRODUCTION": "true"
+  },
   "routes": [
     {
       "handle": "filesystem"
