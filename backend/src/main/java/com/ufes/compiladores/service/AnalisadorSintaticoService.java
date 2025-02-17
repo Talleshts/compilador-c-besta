@@ -220,28 +220,89 @@ public class AnalisadorSintaticoService {
 		match("{");
 		while (currentTokenIndex < tokens.size() && 
 			   !tokens.get(currentTokenIndex).getLexema().equals("}")) {
-			Token token = tokens.get(currentTokenIndex);
-			
-			// Verifica se é uma declaração de variável
-			if (isDeclaracao(token)) {
-				especificador();
-				tipo();
-				matchTipo("ID");
-				// Trata a possível inicialização da variável
-				if (currentTokenIndex < tokens.size() && 
-					tokens.get(currentTokenIndex).getTipo().equals("OPERADOR") &&
-					tokens.get(currentTokenIndex).getLexema().equals("=")) {
-					match("=");
-					expr();
-				}
-				match(";");
-			} 
-			// Se não é declaração, é uma instrução
-			else {
-				instrucao();
-			}
+			declaracaoOuInstrucao();
 		}
 		match("}");
+	}
+
+	private void declaracaoOuInstrucao() {
+		if (currentTokenIndex >= tokens.size())
+			return;
+
+		Token token = tokens.get(currentTokenIndex);
+
+		// Verifica se é uma declaração
+		if (isDeclaracao(token)) {
+			declaracaoVariavel();
+		}
+		// Se não é declaração, é uma instrução
+		else {
+			instrucao();
+		}
+	}
+
+	private void declaracaoVariavel() {
+		// Lê especificador se houver (static, extern, const)
+		especificador();
+
+		// Lê o tipo
+		tipo();
+
+		// Lê o primeiro identificador
+		matchTipo("ID");
+
+		// Verifica se é um array
+		if (currentTokenIndex < tokens.size() &&
+				tokens.get(currentTokenIndex).getLexema().equals("[")) {
+			match("[");
+			// Pode ser um ID ou INT_LITERAL
+			Token token = tokens.get(currentTokenIndex);
+			if (token.getTipo().equals("ID") || token.getTipo().equals("INT_LITERAL")) {
+				currentTokenIndex++;
+			} else {
+				throw new SyntaxException(
+						"Índice de array inválido: " + token.getLexema(),
+						"Use um identificador ou número inteiro como índice.");
+			}
+			match("]");
+
+			// Verifica se tem inicialização de array
+			if (currentTokenIndex < tokens.size() &&
+					tokens.get(currentTokenIndex).getLexema().equals("=")) {
+				match("=");
+				match("{");
+				// Lista de valores do array
+				if (!tokens.get(currentTokenIndex).getLexema().equals("}")) {
+					expr();
+					while (currentTokenIndex < tokens.size() &&
+							tokens.get(currentTokenIndex).getLexema().equals(",")) {
+						match(",");
+						expr();
+					}
+				}
+				match("}");
+			}
+		}
+		// Verifica se tem inicialização simples
+		else if (currentTokenIndex < tokens.size() &&
+				tokens.get(currentTokenIndex).getLexema().equals("=")) {
+			match("=");
+			expr();
+		}
+
+		// Verifica se tem mais variáveis na mesma declaração
+		while (currentTokenIndex < tokens.size() &&
+				tokens.get(currentTokenIndex).getLexema().equals(",")) {
+			match(",");
+			matchTipo("ID");
+			if (currentTokenIndex < tokens.size() &&
+					tokens.get(currentTokenIndex).getLexema().equals("=")) {
+				match("=");
+				expr();
+			}
+		}
+
+		match(";");
 	}
 
 	private void instrucao() {
@@ -254,84 +315,91 @@ public class AnalisadorSintaticoService {
 		
 		if (token.getTipo().equals("ID")) {
 			matchTipo("ID");
-			expressao();
-			match(";");
+			// Pode ser uma chamada de função ou atribuição
+			if (currentTokenIndex < tokens.size()) {
+				Token nextToken = tokens.get(currentTokenIndex);
+				if (nextToken.getLexema().equals("(")) {
+					// Chamada de função
+					match("(");
+					if (!tokens.get(currentTokenIndex).getLexema().equals(")")) {
+						exprList();
+					}
+					match(")");
+					match(";");
+				} else if (nextToken.getLexema().equals("[")) {
+					// Acesso a array
+					match("[");
+					expr();
+					match("]");
+					if (currentTokenIndex < tokens.size() &&
+							tokens.get(currentTokenIndex).getTipo().equals("OPERADOR")) {
+						atribuicao();
+					}
+					match(";");
+				} else {
+					// Atribuição simples
+					atribuicao();
+					match(";");
+				}
+			}
 		}
 		else if (token.getTipo().equals("PALAVRA_RESERVADA")) {
 			switch (token.getLexema()) {
-				case "for":
-					match("for");
-					match("(");
-					// Inicialização (opcional) - pode ser declaração ou expressão
-					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
-						if (isDeclaracao(tokens.get(currentTokenIndex))) {
-							tipo();
-							matchTipo("ID");
-							if (currentTokenIndex < tokens.size() &&
-									tokens.get(currentTokenIndex).getTipo().equals("OPERADOR") &&
-									tokens.get(currentTokenIndex).getLexema().equals("=")) {
-								match("=");
-								expr();
-							}
-						} else {
-							expr();
-						}
-					}
-					match(";");
-					// Condição (opcional)
-					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
-						expr();
-					}
-					match(";");
-					// Incremento (opcional)
-					if (!tokens.get(currentTokenIndex).getLexema().equals(")")) {
-						expr();
-					}
-					match(")");
-					if (currentTokenIndex < tokens.size() &&
-							tokens.get(currentTokenIndex).getLexema().equals("{")) {
-						bloco();
-					} else {
-						instrucao();
-					}
-					break;
-				case "while":
-					match("while");
-					match("(");
-					expr();
-					match(")");
-					if (currentTokenIndex < tokens.size() &&
-							tokens.get(currentTokenIndex).getLexema().equals("{")) {
-						bloco();
-					} else {
-						instrucao();
-					}
-					break;
 				case "if":
 					match("if");
 					match("(");
 					expr();
 					match(")");
-					if (currentTokenIndex < tokens.size() && 
-						tokens.get(currentTokenIndex).getLexema().equals("{")) {
+					if (tokens.get(currentTokenIndex).getLexema().equals("{")) {
 						bloco();
 					} else {
 						instrucao();
 					}
-					if (currentTokenIndex < tokens.size() && 
-						tokens.get(currentTokenIndex).getLexema().equals("else")) {
+					if (currentTokenIndex < tokens.size() &&
+							tokens.get(currentTokenIndex).getLexema().equals("else")) {
 						match("else");
-						if (currentTokenIndex < tokens.size() && 
-							tokens.get(currentTokenIndex).getLexema().equals("{")) {
+						if (tokens.get(currentTokenIndex).getLexema().equals("{")) {
 							bloco();
 						} else {
 							instrucao();
 						}
 					}
 					break;
+				case "for":
+					match("for");
+					match("(");
+					// Inicialização
+					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
+						if (isDeclaracao(tokens.get(currentTokenIndex))) {
+							declaracaoVariavel();
+						} else {
+							expr();
+							match(";");
+						}
+					} else {
+						match(";");
+					}
+					// Condição
+					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
+						expr();
+					}
+					match(";");
+					// Incremento
+					if (!tokens.get(currentTokenIndex).getLexema().equals(")")) {
+						expr();
+					}
+					match(")");
+					if (tokens.get(currentTokenIndex).getLexema().equals("{")) {
+						bloco();
+					} else {
+						instrucao();
+					}
+					break;
 				case "return":
 					match("return");
-					expr();
+					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
+						expr();
+					}
 					match(";");
 					break;
 				case "printf":
@@ -354,40 +422,26 @@ public class AnalisadorSintaticoService {
 					break;
 				default:
 					throw new SyntaxException("Instrução inválida: " + token.getLexema(), 
-							"Esperava uma instrução válida (if, while, for, return, printf, scanf, break, etc).");
+							"Esperava uma instrução válida (if, for, return, printf, scanf, break).");
 			}
 		}
 		else {
 			throw new SyntaxException("Instrução inválida", 
-					"Esperava uma instrução válida (if, while, for, return, printf, scanf, break, etc).");
+					"Esperava uma instrução válida.");
 		}
 	}
 
 	private void expressao() {
-		if (currentTokenIndex >= tokens.size()) return;
-
-		Token token = tokens.get(currentTokenIndex);
-		
-		if (token.getTipo().equals("OPERADOR")) {
-			if (token.getLexema().equals("++") || token.getLexema().equals("--")) {
+		exprRelacional();
+		while (currentTokenIndex < tokens.size()) {
+			Token token = tokens.get(currentTokenIndex);
+			if (token.getTipo().equals("OPERADOR") &&
+					(token.getLexema().equals("&&") || token.getLexema().equals("||"))) {
 				currentTokenIndex++;
+				exprRelacional();
 			} else {
-				atribuicao();
+				break;
 			}
-		}
-		else if (token.getTipo().equals("DELIMITADOR") && token.getLexema().equals("[")) {
-			match("[");
-			exprRelacional();
-			match("]");
-			if (currentTokenIndex < tokens.size() && 
-				tokens.get(currentTokenIndex).getTipo().equals("OPERADOR")) {
-				atribuicao();
-			}
-		}
-		else if (token.getTipo().equals("DELIMITADOR") && token.getLexema().equals("(")) {
-			match("(");
-			exprList();
-			match(")");
 		}
 	}
 
