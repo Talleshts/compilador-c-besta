@@ -273,6 +273,10 @@ public class AnalisadorSintaticoService {
 					match(")");
 					match(";");
 					break;
+				case "break":
+					match("break");
+					match(";");
+					break;
 				default:
 					throw new SyntaxException("Instrução inválida: " + token.getLexema(), 
 						"Esperava uma instrução válida (if, return, printf, scanf, etc).");
