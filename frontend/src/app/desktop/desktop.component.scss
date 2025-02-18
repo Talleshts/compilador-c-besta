@@ -23,7 +23,7 @@
     background-color: #a495aa;
     border: 2px solid #16131C;
     border-radius: 40px;
-    min-width: 368.5px;
+    width: 368.5px;
     height: 285px;
     min-height: 100%;
     margin-right: 10px;
@@ -310,7 +310,7 @@ label {
 }
 
 .token-type[data-type="ERRO"] {
-    color: #ff4c4c; /* Vermelho para erros */
+    color: #a10303; /* Vermelho para erros */
 }
 
 .token-lexema {
@@ -330,7 +330,7 @@ label {
 
 .error-token {
     background-color: rgba(244, 71, 71, 0.1);
-    border: 1px solid #f44747;
+    border: 1px solid #a10303;
 }
 
 //Saída do analisador sintático
@@ -340,22 +340,30 @@ label {
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 1rem;
+  width: 330.5px;
 }
 
 .error-item {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.2rem;
   align-items: center;
   padding: 0.5rem;
   border-radius: 4px;
   background-color: rgba(255, 0, 0, 0.1);
   border: 1px solid #ff4c4c;
+  overflow-x: auto;
+  white-space: nowrap; /* Evita que o conteúdo quebre */
+  max-width: 100%; /* Evita que o elemento cresça indefinidamente */
 }
+
+.error-item span {
+  min-height: 1rem;
+}  
 
 .error-message {
   font-weight: bold;
-  color: #ff4c4c;
+  color: #a10303;
   min-width: 90px;
   flex: 1 1 auto;
 }
