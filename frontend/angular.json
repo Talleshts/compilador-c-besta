@@ -77,12 +77,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "compilador-c-besta:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "compilador-c-besta:build:production"
+              "buildTarget": "compilador-c-besta:build:production"
             },
             "development": {
-              "browserTarget": "compilador-c-besta:build:development"
+              "buildTarget": "compilador-c-besta:build:development"
             }
           },
           "defaultConfiguration": "development"
