@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ufes.compiladores.dto.CodeDTO;
 import com.ufes.compiladores.dto.ResponseDTO;
+import com.ufes.compiladores.models.ErroSemantico;
 import com.ufes.compiladores.models.ErroSintatico;
 import com.ufes.compiladores.models.Token;
+import com.ufes.compiladores.service.AnalisadorSemanticoService;
 import com.ufes.compiladores.service.AnalisadorSintaticoService;
 import com.ufes.compiladores.service.AnalizadorLexicoService;
 
@@ -29,6 +31,9 @@ public class CompiladorController {
 	@Autowired
 	private AnalisadorSintaticoService sintaticoAnalyzerService;
 
+	@Autowired
+	private AnalisadorSemanticoService semanticoAnalyzerService;
+
 	@GetMapping("/health")
 	public ResponseEntity<String> health() {
 		return ResponseEntity.ok("API is running!");
@@ -38,7 +43,7 @@ public class CompiladorController {
 	public ResponseEntity<ResponseDTO> analyzeLexicaCode(@RequestBody CodeDTO codeDTO) {
 		System.out.println("Received request for lexical analysis");
 		List<Token> tokens = lexicalAnalyzerService.analisar(codeDTO.getCode());
-		ResponseDTO response = new ResponseDTO(tokens, null, null, null);
+		ResponseDTO response = new ResponseDTO(tokens, null, null, null, null);
 		System.out.println("Returning " + tokens.size() + " tokens");
 		return ResponseEntity.ok(response);
 	}
@@ -47,8 +52,17 @@ public class CompiladorController {
 	public ResponseEntity<ResponseDTO> analyzeSintaticaCode(@RequestBody CodeDTO codeDTO) {
 		System.out.println("Received request for syntactic analysis");
 		List<ErroSintatico> errors = sintaticoAnalyzerService.analisar(codeDTO.getCode());
-		ResponseDTO response = new ResponseDTO(null, errors, null, null);
+		ResponseDTO response = new ResponseDTO(null, errors, null, null, null);
 		System.out.println("Returning " + errors.size() + " errors");
+		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping("/analyze-semantica")
+	public ResponseEntity<ResponseDTO> analyzeSemanticaCode(@RequestBody CodeDTO codeDTO) {
+		System.out.println("Received request for semantic analysis");
+		List<ErroSemantico> errors = semanticoAnalyzerService.analisar(codeDTO.getCode());
+		ResponseDTO response = new ResponseDTO(null, null, errors, null, null);
+		System.out.println("Returning " + errors.size() + " semantic errors");
 		return ResponseEntity.ok(response);
 	}
 }

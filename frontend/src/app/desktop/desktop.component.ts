@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ErroSintatico } from '../interface/erro-sintatico.interface';
+import { ErroSemantico } from '../interface/erro-semantico.interface';
 import { CustomToken } from '../interface/token.interface';
 import { CodeStoreService } from '../store/code-store.service';
 
@@ -17,12 +18,13 @@ export class DesktopComponent implements OnInit {
   isDefaultColor: boolean = true;
   tokens: CustomToken[] = [];
   errosSintaticos: ErroSintatico[] = [];
+  errosSemanticos: ErroSemantico[] = [];
   currentDragonImage: string = '../../assets/dragon.png';
 
   constructor(
     private codeStoreService: CodeStoreService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.toggleColors();
@@ -53,6 +55,7 @@ export class DesktopComponent implements OnInit {
     this.outputContent = '';
     this.tokens = [];
     this.errosSintaticos = [];
+    this.errosSemanticos = [];
 
     const btn1Elements = document.querySelectorAll('.btn-1');
     const lblBtn1Elements = document.querySelectorAll('.lbl-btn-1');
@@ -103,6 +106,22 @@ export class DesktopComponent implements OnInit {
     }
   }
 
+  postCodeSemantico(): void {
+    if (this.screenMode == 'src') {
+      this.codeStoreService.analyzeSemantica(this.srcContent).subscribe({
+        next: (response: any) => {
+          console.log('Análise semântica realizada com sucesso:', response);
+          this.errosSemanticos = response.errosSemanticos || [];
+          this.formatOutputSemantico();
+        },
+        error: (error) => {
+          console.error('Erro ao realizar análise semântica:', error);
+          this.outputContent = 'Erro ao realizar análise semântica.';
+        },
+      });
+    }
+  }
+
   private formatOutput(): void {
     this.outputContent = this.tokens
       .map(
@@ -117,6 +136,15 @@ export class DesktopComponent implements OnInit {
       .map(
         (erro) =>
           `Erro: ${erro.mensagem} (linha: ${erro.linha}, coluna: ${erro.coluna})\nSugestão: ${erro.sugestao}`
+      )
+      .join('\n');
+  }
+
+  private formatOutputSemantico(): void {
+    this.outputContent = this.errosSemanticos
+      .map(
+        (erro) =>
+          `Erro ${erro.tipo}: ${erro.mensagem} (linha: ${erro.linha}, coluna: ${erro.coluna})\nSugestão: ${erro.sugestao}`
       )
       .join('\n');
   }
@@ -149,6 +177,31 @@ export class DesktopComponent implements OnInit {
   compilarSintaticoBtn(): void {
     if (this.srcContent.trim()) {
       this.postCodeSintatico();
+      this.screenMode = 'output';
+
+      const btn1Elements = document.querySelectorAll('.btn-1');
+      const lblBtn1Elements = document.querySelectorAll('.lbl-btn-1');
+      const lblSrc = document.getElementById('lbl-src');
+      const lblOutput = document.querySelectorAll('.lbl-output');
+
+      btn1Elements.forEach((btn) => {
+        this.renderer.setStyle(btn, 'background-color', '#16131C');
+      });
+      lblBtn1Elements.forEach((label) => {
+        this.renderer.setStyle(label, 'color', '#16131C');
+      });
+      this.renderer.setStyle(lblSrc, 'color', '#16131C');
+      lblOutput.forEach((label) => {
+        this.renderer.setStyle(label, 'color', '#fe4a3c');
+      });
+    } else {
+      alert('O campo de código está vazio.');
+    }
+  }
+
+  compilarSemanticoBtn(): void {
+    if (this.srcContent.trim()) {
+      this.postCodeSemantico();
       this.screenMode = 'output';
 
       const btn1Elements = document.querySelectorAll('.btn-1');

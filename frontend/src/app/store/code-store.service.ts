@@ -26,4 +26,8 @@ export class CodeStoreService {
       code,
     });
   }
+
+  analyzeSemantica(code: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/analyze-semantica`, { code });
+  }
 }

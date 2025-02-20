@@ -32,6 +32,16 @@
                     </div>
                 </div>
             </div>
+            <div class="output-section" *ngIf="errosSemanticos.length > 0">
+                <h3>Erros Semânticos:</h3>
+                <div class="error-list">
+                    <div class="error-item" *ngFor="let erro of errosSemanticos">
+                        <span class="error-message">Erro {{ erro.tipo }}: {{ erro.mensagem }}</span>
+                        <span class="error-position">(linha: {{ erro.linha }}, coluna: {{ erro.coluna }})</span>
+                        <span class="error-sugestao">Sugestão: {{ erro.sugestao }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -60,6 +70,11 @@
             <div class="button-label-pair">
                 <label>SINTATICA</label>
                 <button class="monitor-button btn-3" (click)="compilarSintaticoBtn()"></button>
+            </div>
+
+            <div class="button-label-pair">
+                <label>SEMANTICA</label>
+                <button class="monitor-button btn-3" (click)="compilarSemanticoBtn()"></button>
             </div>
         </div>
     </div>
