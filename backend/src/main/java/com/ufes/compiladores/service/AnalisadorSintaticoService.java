@@ -399,6 +399,17 @@ public class AnalisadorSintaticoService {
 						instrucao();
 					}
 					break;
+				case "while":
+					match("while");
+					match("(");
+					expr(); // A condição do while deve ser uma expressão válida
+					match(")");
+					if (tokens.get(currentTokenIndex).getLexema().equals("{")) {
+						bloco();
+					} else {
+						instrucao();
+					}
+					break;
 				case "return":
 					match("return");
 					if (!tokens.get(currentTokenIndex).getLexema().equals(";")) {
